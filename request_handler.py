@@ -1,7 +1,23 @@
+# global imports here 
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from animals import get_all_animals, get_all_employees, get_all_locations, get_single_animal,get_single_location, get_single_employee, get_all_customers, get_single_customer, create_animal, create_customer, create_employee
 
+#framework imports here
+
+#developer module imports
+from animals import (
+  get_all_animals,
+  get_all_employees,
+  get_all_locations, 
+  get_single_animal,
+  get_single_location,
+  get_single_employee,
+  get_all_customers,
+  get_single_customer,
+  create_animal,
+  create_customer,
+  create_employee
+  )
 
 class HandleRequests(BaseHTTPRequestHandler):
   # Here's a class. It inherits from another class.
@@ -95,7 +111,7 @@ class HandleRequests(BaseHTTPRequestHandler):
   # Here's a method on the class that overrides the parent's method.
   # It handles any POST request.
   def do_POST(self):
-      self._set_headers(201)
+      self._set_headers(201) 
       content_len = int(self.headers.get('content-length', 0))
       post_body = self.rfile.read(content_len)
 
