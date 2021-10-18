@@ -16,7 +16,8 @@ from animals import (
   get_single_customer,
   create_animal,
   create_customer,
-  create_employee
+  create_employee,
+  create_location
   )
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -125,6 +126,7 @@ class HandleRequests(BaseHTTPRequestHandler):
       new_animal = None
       new_customer = None
       new_employee = None
+      new_location = None
 
       # Add a new animal to the list. Don't worry about
       # the orange squiggle, you'll define the create_animal
@@ -135,11 +137,14 @@ class HandleRequests(BaseHTTPRequestHandler):
           new_customer = create_customer(post_body)
       if resource == "employees":
           new_employee = create_employee(post_body)
+      if resource == "locations":
+          new_location = create_location(post_body)
 
       # Encode the new animal and send in response
       self.wfile.write(f"{new_animal}".encode())
       self.wfile.write(f"{new_customer}".encode())
       self.wfile.write(f"{new_employee}".encode())
+      self.wfile.write(f"{new_location}".encode())
 
 
 
