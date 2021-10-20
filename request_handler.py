@@ -19,7 +19,9 @@ from animals import (
   create_employee,
   create_location,
   delete_animal,
-  delete_employee
+  delete_employee,
+  delete_customer,
+  delete_location
 )
 
 
@@ -155,6 +157,12 @@ class HandleRequests(BaseHTTPRequestHandler):
     if resource == "employees":
         delete_employee(id)
 
+    if resource == "customers":
+        delete_customer(id)
+
+    if resource == "locations":
+        delete_location(id)
+        
     # Encode the new animal and send in response
     self.wfile.write("".encode())
 
