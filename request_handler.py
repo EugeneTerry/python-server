@@ -24,7 +24,8 @@ from animals import (
   delete_animal,
   delete_employee,
   delete_customer,
-  delete_location
+  delete_location,
+  update_customer
 )
 
 
@@ -191,6 +192,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     if resource == "locations":
         update_location(id, post_body)
+
+    if resource == "customers":
+        update_customer(id, post_body)
 
     # Encode the new animal and send in response
     self.wfile.write("".encode())
