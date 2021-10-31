@@ -10,5 +10,9 @@
       "database": "\\\\wsl$\\Ubuntu-18.04\\home\\eugene\\NSS\\workspace\\python_folder\\python-server\\kennel.db"
     }
   ],
-  "sqltools.useNodeRuntime": true
+  "sqltools.useNodeRuntime": true,
+  "cSpell.words": [
+    "AUTOINCREMENT",
+    "rfile"
+  ]
 }

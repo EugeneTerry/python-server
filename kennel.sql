@@ -1,36 +1,36 @@
 CREATE TABLE `Location` (
-	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	`name`	TEXT NOT NULL,
-	`address`	TEXT NOT NULL
+		`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		`name`	TEXT NOT NULL,
+		`address`	TEXT NOT NULL
 );
 
 CREATE TABLE `Customer` (
-    `id`    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    `name`    TEXT NOT NULL,
-    `address`    TEXT NOT NULL,
-    `email`    TEXT NOT NULL,
-    `password`    TEXT NOT NULL
+			`id`    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+			`name`    TEXT NOT NULL,
+			`address`    TEXT NOT NULL,
+			`email`    TEXT NOT NULL,
+			`password`    TEXT NOT NULL
 );
 
 CREATE TABLE `Animal` (
-	`id`  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	`name`  TEXT NOT NULL,
-	`status` TEXT NOT NULL,
-	`breed` TEXT NOT NULL,
-	`customer_id` INTEGER NOT NULL,
-	`location_id` INTEGER,
-	FOREIGN KEY(`customer_id`) REFERENCES `Customer`(`id`),
-	FOREIGN KEY(`location_id`) REFERENCES `Location`(`id`)
+		`id`  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		`name`  TEXT NOT NULL,
+		`status` TEXT NOT NULL,
+		`breed` TEXT NOT NULL,
+		`customer_id` INTEGER NOT NULL,
+		`location_id` INTEGER,
+		FOREIGN KEY(`customer_id`) REFERENCES `Customer`(`id`),
+		FOREIGN KEY(`location_id`) REFERENCES `Location`(`id`)
 );
 
 
 
 CREATE TABLE `Employee` (
-	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	`name`	TEXT NOT NULL,
-	`address`	TEXT NOT NULL,
-	`location_id` INTEGER NOT NULL,
-	FOREIGN KEY(`location_id`) REFERENCES `Location`(`id`)
+		`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		`name`	TEXT NOT NULL,
+		`address`	TEXT NOT NULL,
+		`location_id` INTEGER NOT NULL,
+		FOREIGN KEY(`location_id`) REFERENCES `Location`(`id`)
 
 );
 
@@ -57,3 +57,6 @@ INSERT INTO `Animal` VALUES (null, "Jax", "Treatment", "Beagle", 1, 1);
 INSERT INTO `Animal` VALUES (null, "Falafel", "Treatment", "Siamese", 4, 2);
 INSERT INTO `Animal` VALUES (null, "Doodles", "Kennel", "Poodle", 3, 1);
 INSERT INTO `Animal` VALUES (null, "Daps", "Kennel", "Boxer", 2, 2);
+
+
+SELECT * FROM Animal;
