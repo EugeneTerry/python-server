@@ -55,17 +55,44 @@ ANIMALS = [
 ]
 
 
-def get_all_animals():
-    return ANIMALS
-
 # Function with a single parameter
-def get_single_animal(id): # Variable to hold the found animal, if it exists
-    requested_animal = None
-    for animal in ANIMALS:
-        if animal["id"] == id: # Dictionaries in Python use [] notation to find a key, not dot notation
-            requested_animal = animal
+# def get_single_animal(id): # Variable to hold the found animal, if it exists
+#     requested_animal = None
+#     for animal in ANIMALS:
+#         if animal["id"] == id: # Dictionaries in Python use [] notation to find a key, not dot notation
+#             requested_animal = animal
 
-    return requested_animal
+#     return requested_animal
+
+def get_single_animal(id):
+  with sqlite3.connect("./kennel.db") as conn:
+    conn.row_factory = sqlite3.Row
+    db_cursor = conn.cursor()
+
+    # Use a ? parameter to inject a variable's value
+    # into the SQL statement.
+    db_cursor.execute("""
+    SELECT
+      a.id,
+      a.name,
+      a.breed,
+      a.status,
+      a.location_id,
+      a.customer_id
+    FROM animal a
+    WHERE a.id = ?
+    """, ( id, ))
+
+    # Load the single result into memory
+    data = db_cursor.fetchone()
+
+    # Create an animal instance from the current row
+    animal = Animal(data['id'], data['name'], data['breed'],
+                    data['status'], data['location_id'],
+                    data['customer_id'])
+
+    return json.dumps(animal.__dict__)
+
 
 def create_animal(animal):
     # Get the id value of the last animal in the list

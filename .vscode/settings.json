@@ -7,7 +7,7 @@
       "previewLimit": 50,
       "driver": "SQLite",
       "name": "Python Kennels",
-      "database": "\\\\wsl$\\Ubuntu-18.04\\home\\eugene\\NSS\\workspace\\python_folder\\python-server\\kennel.db"
+      "database": "kennel.db"
     }
   ],
   "sqltools.useNodeRuntime": true,
