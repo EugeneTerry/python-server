@@ -10,7 +10,8 @@ from animals import (
   get_single_animal,
   create_animal,
   update_animal,
-  delete_animal
+  delete_animal,
+  get_animals_by_location_id
 )
 from customers import (
   get_all_customers,
@@ -146,20 +147,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         # email as a filtering value?
         if key == "email" and resource == "customers":
             response = get_customers_by_email(value)
+        if key == "location_id" and resource == "animals":
+            response = get_animals_by_location_id(value)
 
-    # if resource == "animals":
-    #   if id is not None:
-    #     response = f"{get_single_animal(id)}"
-
-    #   else:
-    #     response = f"{get_all_animals()}"
-
-    # if resource == "customers":
-    #     if id is not None:
-    #         response = f"{get_single_customer(id)}"
-
-    #     else:
-    #         response = f"{get_all_customers()}"
 
     if resource == "locations":
       if id is not None:

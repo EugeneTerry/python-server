@@ -127,3 +127,33 @@ def get_all_animals():
 
     # Use `json` package to properly serialize list as JSON
     return json.dumps(animals)
+
+def get_animals_by_location_id(location_id):
+
+    with sqlite3.connect("./kennel.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+        
+        db_cursor.execute("""
+        SELECT
+            a.id,
+            a.name,
+            a.breed,
+            a.status,
+            a.location_id,
+            a.customer_id
+        FROM animal a
+        WHERE a.location_id = ?
+        """, (location_id))
+
+        animals = []
+
+        dataset = db_cursor.fetchall()
+        for row in dataset:
+            animal = Animal(row['id'], row['name'], row['breed'],
+                            row['status'], row['location_id'],
+                            row['customer_id'])
+
+            animals.append(animal.__dict__)
+
+    return json.dumps(animals)
