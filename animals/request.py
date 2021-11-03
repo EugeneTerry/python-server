@@ -3,56 +3,7 @@ import json
 from models import Animal
 
 
-ANIMALS = [
-    {
-        "id": 1,
-        "name": "Snickers",
-        "breed": "Mutt",
-        "locationId": 1,
-        "status": "Admitted",
-        "customerId": 4
-    },
-    {
-        "id": 2,
-        "name": "Gypsy",
-        "breed": "Poodle",
-        "locationId": 1,
-        "status": "Admitted",
-        "customerId": 2
-    },
-    {
-        "id": 3,
-        "name": "Blue",
-        "breed": "Lab",
-        "locationId": 2,
-        "status": "Admitted",
-        "customerId": 1
-    },
-    {
-      "id": 4,
-      "name": "Butch Mane IIII",
-      "breed": "Great Dane",
-      "locationId": 1,
-      "status": "Admitted",
-      "customerId": 4
-    },
-    {
-      "id": 6,
-      "name": "Markey Mark III",
-      "breed": "Pug",
-      "locationId": 1,
-      "status": "Admitted",
-      "customerId": 3
-    },
-    {
-      "name": "Michael Day",
-      "breed": "Lab",
-      "locationId": 3,
-      "status": "Admitted",
-      "customerId": 2,
-      "id": 5
-    }
-]
+ANIMALS = []
 
 
 # Function with a single parameter
