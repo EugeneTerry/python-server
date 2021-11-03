@@ -17,21 +17,24 @@ from customers import (
   delete_customer, 
   get_single_customer, 
   create_customer, 
-  update_customer)
+  update_customer
+  )
 
 from employees import (
   get_all_employees, 
   get_single_employee, 
   update_employee, 
   create_employee, 
-  delete_employee,)
+  delete_employee
+  )
 
 from locations import (
   get_all_locations, 
   get_single_location,
   update_location, 
   create_location, 
-  delete_location)
+  delete_location
+  )
 
 class HandleRequests(BaseHTTPRequestHandler):
   # Here's a class. It inherits from another class.

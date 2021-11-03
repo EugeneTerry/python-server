@@ -4,30 +4,7 @@ import json
 from models import CUSTOMER
 
 CUSTOMERS = [
-  {
-    "id": 1,
-    "name": "Hannah Hall",
-    "address": "7002 Chestnut Ct",
-    "email": "HannahHall@xmail.com"
-  },
-  {
-    "id": 2,
-    "name": "Taylor Slow",
-    "address": "77A Almond Cv",
-    "email": "TaylorSlow@kmail.com"
-  },
-  {
-    "id": 3,
-    "name": "Bruno Pluto",
-    "address": "4 Cashew Dr",
-    "email": "BPluto@mars.com"
-  },
-  {
-    "id": 4,
-    "name": "Tom Jump",
-    "address": "2322 Walnut St",
-    "email": "JumpJump@me.net"
-  }
+ 
 ]
 
 # OLD GET ALL METHOD
@@ -86,7 +63,7 @@ def get_single_customer(id):
     WHERE a.id = ?
     """, ( id, ))
 
-    data = db_cursor.fetchall()
+    data = db_cursor.fetchone()
 
     customer = CUSTOMER(data['id'], data['name'], data['address'],
                         data['email'], data['password'])
