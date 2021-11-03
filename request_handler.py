@@ -7,28 +7,34 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 # developer module imports
 from animals import (
   get_all_animals,
-  get_all_employees,
-  get_all_locations,
   get_single_animal,
-  get_single_location,
-  get_single_employee,
-  get_all_customers,
-  get_single_customer,
   create_animal,
   update_animal,
-  update_employee,
-  update_location,
-  create_customer,
-  create_employee,
-  create_location,
-  delete_animal,
-  delete_employee,
-  delete_customer,
-  delete_location,
-  update_customer
+  delete_animal
 )
+from customers import (
+  get_all_customers,
+  delete_customer, 
+  get_single_customer, 
+  create_customer, 
+  update_customer
+  )
 
+from employees import (
+  get_all_employees, 
+  get_single_employee, 
+  update_employee, 
+  create_employee, 
+  delete_employee
+  )
 
+from locations import (
+  get_all_locations, 
+  get_single_location,
+  update_location, 
+  create_location, 
+  delete_location
+  )
 
 class HandleRequests(BaseHTTPRequestHandler):
   # Here's a class. It inherits from another class.
