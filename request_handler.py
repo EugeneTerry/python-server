@@ -19,7 +19,8 @@ from customers import (
   delete_customer, 
   get_single_customer, 
   create_customer, 
-  update_customer
+  update_customer,
+  get_customers_by_name
   )
 
 from employees import (
@@ -149,6 +150,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = get_customers_by_email(value)
         if key == "location_id" and resource == "animals":
             response = get_animals_by_location_id(value)
+        if key == "name" and resource == "customers":
+            response = get_customers_by_name(value)
 
 
     if resource == "locations":
