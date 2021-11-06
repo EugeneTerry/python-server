@@ -1,1 +1,1 @@
-from .request import get_all_customers, delete_customer, get_single_customer, create_customer, update_customer
+from .request import get_all_customers, delete_customer, get_single_customer, create_customer, update_customer,get_customers_by_email, get_customers_by_name
