@@ -1,5 +1,6 @@
 import sqlite3
 import json
+from urllib.parse import unquote_plus
 
 from models import CUSTOMER
 
@@ -104,6 +105,8 @@ def get_customers_by_name(name):
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
+        response = []
+        value = unquote_plus(name)
         # Write the SQL query to get the information you want
         db_cursor.execute("""
         select
@@ -113,15 +116,15 @@ def get_customers_by_name(name):
             c.email,
             c.password
         from Customer c
-        WHERE c.name = ?
-        """, ( name, ))
+        WHERE c.name = ?;
+        """, ( value, ))
 
         customers = []
         dataset = db_cursor.fetchall()
 
         for row in dataset:
-            customer = CUSTOMER(row['id'], row['name'], row['address'], row['email'] , row['password'])
-            customers.append(customer.__dict__)
+            response.append(CUSTOMER(*row).__dict__)
+
 
     return json.dumps(customers)
 
@@ -154,4 +157,3 @@ def update_customer(id, new_customer):
     if customer["id"] == id:
       CUSTOMERS[index] = new_customer
       break
-

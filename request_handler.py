@@ -150,7 +150,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = get_customers_by_email(value)
         if key == "location_id" and resource == "animals":
             response = get_animals_by_location_id(value)
-        if key == "name" and resource == "customers":
+        elif key == "name" and resource == "customers":
             response = get_customers_by_name(value)
 
 
@@ -210,6 +210,36 @@ class HandleRequests(BaseHTTPRequestHandler):
     self.wfile.write(f"{new_employee}".encode())
     self.wfile.write(f"{new_location}".encode())
 
+  def do_PUT(self):
+    content_len = int(self.headers.get('content-length', 0))
+    post_body = self.rfile.read(content_len)
+    post_body = json.loads(post_body)
+
+    # Parse the URL
+    (resource, id) = self.parse_url(self.path)
+    
+    success = False
+    # Delete a single item from the list
+    if resource == "animals":
+        update_animal(id, post_body)
+
+    if resource == "employees":
+        update_employee(id, post_body)
+
+    if resource == "locations":
+        update_location(id, post_body)
+
+    if resource == "customers":
+        update_customer(id, post_body)
+
+    if success:
+      self._set_headers(204)
+    else:
+      self._set_headers(404)
+
+    # Encode the new animal and send in response
+    self.wfile.write("".encode())
+
   def do_DELETE(self):
     # Set a 204 response code
     self._set_headers(204)
@@ -237,30 +267,6 @@ class HandleRequests(BaseHTTPRequestHandler):
   # Here's a method on the class that overrides the parent's method.
   # It handles any PUT request.
 
-  def do_PUT(self):
-    self._set_headers(204)
-    content_len = int(self.headers.get('content-length', 0))
-    post_body = self.rfile.read(content_len)
-    post_body = json.loads(post_body)
-
-    # Parse the URL
-    (resource, id) = self.parse_url(self.path)
-
-    # Delete a single animal from the list
-    if resource == "animals":
-        update_animal(id, post_body)
-
-    if resource == "employees":
-        update_employee(id, post_body)
-
-    if resource == "locations":
-        update_location(id, post_body)
-
-    if resource == "customers":
-        update_customer(id, post_body)
-
-    # Encode the new animal and send in response
-    self.wfile.write("".encode())
 
 
 
