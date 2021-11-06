@@ -44,7 +44,7 @@ def get_single_animal(id):
 
     return json.dumps(animal.__dict__)
 
-#BEW DELETE METHOD
+#NEW DELETE METHOD
 
 def delete_animal(id):
     with sqlite3.connect("./kennel.db") as conn:
