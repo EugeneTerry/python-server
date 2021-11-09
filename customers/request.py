@@ -126,7 +126,7 @@ def get_customers_by_name(name):
             response.append(CUSTOMER(*row).__dict__)
 
 
-    return json.dumps(customers)
+    return response
 
 def create_customer(customer):
   max_id = CUSTOMERS[-1]["id"]
