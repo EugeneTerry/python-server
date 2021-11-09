@@ -221,7 +221,7 @@ class HandleRequests(BaseHTTPRequestHandler):
     success = False
     # Delete a single item from the list
     if resource == "animals":
-        update_animal(id, post_body)
+        success = update_animal(id, post_body)
 
     if resource == "employees":
         update_employee(id, post_body)
@@ -230,7 +230,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         update_location(id, post_body)
 
     if resource == "customers":
-        update_customer(id, post_body)
+        success = update_customer(id, post_body)
 
     if success:
       self._set_headers(204)
