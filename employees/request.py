@@ -1,59 +1,60 @@
+import sqlite3
+import json
+from urllib.parse import unquote_plus
 
+from models import EMPLOYEE, employee
 
 
 EMPLOYEES = [
-  {
-    "id": 1,
-    "name": "Ronold McDonald",
-    "locationId": 1
-  },
-  {
-    "id": 2,
-    "name": "Emma Beaton",
-    "locationId": 1
-  },
-  {
-    "id": 3,
-    "name": "Conell Sanders",
-    "locationId": 2
-  },
-  {
-    "id": 4,
-    "name": "Wendy Frost",
-    "locationId": 2
-  },
-  {
-    "name": "Terry, Eugene",
-    "locationId": 2,
-    "id": 5
-  },
-  {
-    "name": "Faith Star",
-    "locationId": 1,
-    "id": 6
-  },
-  {
-    "name": "John",
-    "locationId": 3,
-    "id": 7
-  },
-  {
-    "name": "Diego",
-    "locationId": 3,
-    "id": 8
-  }
+  
 ]
 
 def get_all_employees():
-    return EMPLOYEES
+    with sqlite3.connect("./kennel.db") as conn:
+      conn.row_factory = sqlite3.Row
+      db_cursor = conn.cursor()
+      
+      db_cursor.execute("""
+      SELECT
+        e.id,
+        e.name,
+        e.address,
+        e.location_id
+      FROM employee e
+        """)
+      
+      employees = []
+      
+      dataset = db_cursor.fetchall()
+      
+      for row in dataset:
+        employee = EMPLOYEE(row['id'], row['name'],
+                            row['address'], row['location_id'])
+        employees.append(employee.__dict__)
+    
+    return json.dumps(employees)
 
 def get_single_employee(id):
-  requested_employee = None
-  for employee in EMPLOYEES:
-    if employee["id"] == id:
-      requested_employee = employee
+  with sqlite3.connect("./kennel.db") as conn:
+    conn.row_factory = sqlite3.Row
+    db_cursor = conn.cursor()
 
-  return requested_employee
+    db_cursor.execute("""
+    SELECT
+      e.id,
+      e.name,
+      e.address,
+      e.location_id
+    FROM employee e
+    WHERE e.id = ?
+    """, ( id, ))
+
+    data = db_cursor.fetchone()
+
+    employee = EMPLOYEE(data['id'], data['name'], data['address'],
+                        data['location_id'])
+    
+    return json.dumps(employee.__dict__)
 
 def create_employee(employee):
   max_id = EMPLOYEES[-1]["id"]
@@ -63,12 +64,13 @@ def create_employee(employee):
   return employee
 
 def delete_employee(id):
-    employee_index = -1
-    for index, employee in enumerate(EMPLOYEES):
-      if employee["id"] == id:
-        employee_index = index
-    if employee_index >= 0:
-      EMPLOYEES.pop(employee_index)
+    with sqlite3.connect("./kennel.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM employee
+        WHERE id = ?
+        """, (id, ))    
 
 def update_employee(id, new_employee):
   for index, employee in enumerate(EMPLOYEES):

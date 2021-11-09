@@ -1,5 +1,6 @@
 import sqlite3
 import json
+from urllib.parse import unquote_plus
 
 from models import CUSTOMER
 
@@ -104,6 +105,8 @@ def get_customers_by_name(name):
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
+        response = []
+        value = unquote_plus(name)
         # Write the SQL query to get the information you want
         db_cursor.execute("""
         select
@@ -113,17 +116,17 @@ def get_customers_by_name(name):
             c.email,
             c.password
         from Customer c
-        WHERE c.name = ?
-        """, ( name, ))
+        WHERE c.name = ?;
+        """, ( value, ))
 
         customers = []
         dataset = db_cursor.fetchall()
 
         for row in dataset:
-            customer = CUSTOMER(row['id'], row['name'], row['address'], row['email'] , row['password'])
-            customers.append(customer.__dict__)
+            response.append(CUSTOMER(*row).__dict__)
 
-    return json.dumps(customers)
+
+    return response
 
 def create_customer(customer):
   max_id = CUSTOMERS[-1]["id"]
@@ -133,16 +136,48 @@ def create_customer(customer):
   return customer
 
 def delete_customer(id):
-    customer_index = -1
-    for index, customer in enumerate(CUSTOMERS):
-      if customer["id"] == id:
-        customer_index = index
-    if customer_index >= 0:
-      CUSTOMERS.pop(customer_index)
+    with sqlite3.connect("./kennel.db") as conn:
+        db_cursor = conn.cursor()
 
+        db_cursor.execute("""
+        DELETE FROM customer
+        WHERE id = ?
+        """, (id, ))
+
+# def delete_customer(id):
+#     customer_index = -1
+#     for index, customer in enumerate(CUSTOMERS):
+#       if customer["id"] == id:
+#         customer_index = index
+#     if customer_index >= 0:
+#       CUSTOMERS.pop(customer_index)
+
+#OLD UPDATE METHOD
+# def update_customer(id, new_customer):
+#   for index, customer in enumerate(CUSTOMERS):
+#     if customer["id"] == id:
+#       CUSTOMERS[index] = new_customer
+#       break
+
+# NEW UPDATE METHOD
 def update_customer(id, new_customer):
-  for index, customer in enumerate(CUSTOMERS):
-    if customer["id"] == id:
-      CUSTOMERS[index] = new_customer
-      break
-
+  with sqlite3.connect("./kennel.db") as conn:
+    db_cursor = conn.cursor()
+    
+    db_cursor.execute("""
+    UPDATE customer
+      SET
+        name = ?,
+        address = ?,
+        email = ?,
+        password = ?
+    WHERE id = ?
+    """, (new_customer['name'], new_customer['address'],
+          new_customer['email'], new_customer['password'], id,))
+    
+    rows_affected = db_cursor.rowcount
+  
+  if rows_affected == 0:
+    return False
+  else:
+    return True
